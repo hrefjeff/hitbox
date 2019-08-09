@@ -1,5 +1,21 @@
 # Hitbox Journal
 
+## Day 4 (Aug 9th, 2019)
+
+I played at my local today in Huntsville Alabama.
+Lucky Dice Cafe from ~6pm-11pm.
+My focus was entirely on landing my combos.
+
+I noticed cross-cut DP's became much easier.
+At the end of the night I noticed I didn't really have trouble with the 4 to 3 input anymore.
+
+### _Side switching_
+
+I found it difficult to immediately adjust when I ended up on the other side of my opponent.
+An example would be if I jumped and crossed up an opponent.
+I'd freeze up, drop the combo, or start mashing.
+I'll have to develop a warm-up for this soon and practice it.
+
 ## Day 3 (Aug 8th, 2019)
 
 ### _Character Selection_
@@ -16,18 +32,19 @@ I could tell I felt a little more comfortable with the inputs.
 Switching between 4 and 3 has become easier.
 Warm up with SFV currently:
   1. 10 laps (dashing from one side of the stage to the other)
-  1. 50 fireballs each side
-  1. 50 tatsu's each side
-  1. 50 cr.mk -> fireball each side
-  1. 50 donkey kicks each side
-  1. BnB combos:
+  1. Special move warmup:
+      1. 50 fireballs each side
+      1. 50 tatsu's each side
+      1. 50 cr.mk -> fireball each side
+      1. 50 donkey kicks each side
+  1. Combo warmup:
       1. cr.lk -> cr.lp -> h.dp
       1. st.lp -> st.lp -> st.lk -> lk.donkey kick
       1. st.mp -> st.mp -> tatsu
       1. st.mp -> st.mp -> ex.jordan kick -> h.dp
       1. j.hk -> st.mp -> cr.hp -> hk.tatsu (mk.tatsu if close to corner)
-  1. 50 ex.fireball -> vt.activate -> dash -> h.dp
-  1. 50 empty jump cross up -> cr.lk -> cr.lp -> h.dp
+      1. 50 ex.fireball -> vt.activate -> dash -> h.dp
+      1. 50 empty jump cross up -> cr.lk -> cr.lp -> h.dp
 
 I still mash though whenever I haven't thought through a combo.
 Need to stop doing that!
@@ -39,11 +56,11 @@ Whether it was waiting on food, waiting at a red light, or waiting for an ad on 
 
 ### _Taking Densetsu's advice_
 
-I'm applying the first lesson and slowing it down to become familiar with it and speeding it up gradually.
+I'm applying the first lesson by slowing my inputs down in order to become familiar with the motions and gradually speeding up.
 
 Also, I started playing Hollow Knight.
 It's a super dope side scrolling game and fits the hitbox perfectly.
-Movement became easier within 30 minutes of playing.
+I noticed movement became easier within 30 minutes of playing.
 
 ## Day 1 (Aug 6th, 2019)
 
