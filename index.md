@@ -1,9 +1,5 @@
 # Hitbox Journal
 
-I'm doing a 3 month long hitbox journey.
-My mindset going in to this is that I'm going to lose alot in the beginning.
-After 3 months have gone by I hope to figure out if I want to stick with it or stay on pad.
-
 ## Day 3 (Aug 8th, 2019)
 
 ### _Character Selection_
