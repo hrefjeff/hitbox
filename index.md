@@ -5,7 +5,7 @@
 ### _Character Selection_
 
 I decided to go with Ryu.
-He's a basic bitch that has a moveset that overlaps with a majority of the cast.
+He's a basic bitch with a moveset that overlaps with a majority of the cast.
 I believe that will help me be able to transition easily to whatever character I'd like to play next.
 The original plan was to either learn Zeku or Honda.
 In the interest of learning hitbox I thought it best to start with an easier character.
