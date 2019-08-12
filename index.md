@@ -4,8 +4,9 @@
 
 I created a battle lounge and lilCreepySleepy a Birdie player joined.
 We went on for at least 2 hours in a FT3 format.
-His Birdie messed me up.
-However, he primarily used Honda.
+His Birdie messed me up. 0-3 every single time.
+However, he primarily used E.Honda.
+We went even. I did 3-0 him at one point.
 
 The drills and warm-up activies are starting to pay off.
 I can now switch sides freely and not be disoriented.
