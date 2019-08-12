@@ -1,5 +1,37 @@
 # Hitbox Journal
 
+## Day 6 (Aug 11th, 2019)
+
+I created a battle lounge and lilCreepySleepy a Birdie player joined.
+We went on for at least 2 hours in a FT3 format.
+His Birdie messed me up.
+However, he primarily used Honda.
+
+The drills and warm-up activies are starting to pay off.
+I can now switch sides freely and not be disoriented.
+
+### _Auto spacing whiff punishes_
+
+Ryu's st.mk is a useful tool to space your opponent just far enough away from you to whiff punish their next attack.
+I'll try to include more of this in my game play as well.
+
+### _Miscellaneous thoughts_
+
+I want to learn some VT1 setups.
+After EX.donkey kick the opponent can't back-rise.
+That leaves only focusing on quick-rise and normal rise.
+In the corner, I know you can do ex.jordan -> dash -> st.hp (+1 ob, +5 on hit, CC counter hit)
+
+## Day 5 (Aug 10th, 2019)
+
+I mainly stayed in training mode today.
+Played maybe 1 casual match and then got off.
+On top of the regular warm-ups, I developed a side-switch drill as well.
+Cross-up warmups:
+  1. 50 empty jump cross up -> cr.lk -> cr.lp -> h.dp
+  1. 50 j.mk -> cr.lk -> cr.lp -> h.dp (this one you have the option to cross up)
+  1. 50 h.tatsu -> backdash -> cr.mk -> ex.fireball -> v-trigger cancel -> dash -> dp
+
 ## Day 4 (Aug 9th, 2019)
 
 I played at my local today in Huntsville Alabama.
@@ -44,7 +76,6 @@ Warm up with SFV currently:
       1. st.mp -> st.mp -> ex.jordan kick -> h.dp
       1. j.hk -> st.mp -> cr.hp -> hk.tatsu (mk.tatsu if close to corner)
       1. 50 ex.fireball -> vt.activate -> dash -> h.dp
-      1. 50 empty jump cross up -> cr.lk -> cr.lp -> h.dp
 
 I still mash though whenever I haven't thought through a combo.
 Need to stop doing that!
