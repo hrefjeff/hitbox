@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<!--
+
+    Incorporating reaction jump time
+    https://github.com/gattodigital/JS-Reaction-Time/blob/master/js_reaction_time.html
+
+    Arrows
+    https://www.toptal.com/designers/htmlarrows/
+
+    TODO: Find a way to make this more strict with keyup
+          (i.e. left go of forward before pressing down)
+
+-->
+
+<head>
+
+    <style type="text/css">
+        #logger {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            width: 50%;
+            border: 3px solid black;
+            height: 200px;
+        }
+
+        #msgbox {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            width: 50%;
+            height: 50px;
+        }
+
+        #topscore {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            width: 50%;
+            height: 50px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var PASSCODE = ['a','s','a', '1'];
+var current = 0;
+var counter = 0;
+var currentBest = 0;
+let str = '';
+let code = null;
+var logger = document.getElementById('logger');
+var msgbox = document.getElementById('msgbox');
+var topscore = document.getElementById('topscore');
+
+let start = null;
+let firstLeft = true;
+
+
+        function keyListener(e) {
+            code = e.keyCode || e.which;
+            str = String.fromCharCode(code);
+            code = null;
+        
+            if(str === PASSCODE[current]){
+                if (str === 'a' && firstLeft){
+                  str = '&#8592;'; // left arrow
+                  firstLeft = false;
+                } else if (str === 's') {
+                  str = '&#8595;'; // down arrow
+                } else if (str === 'a' && !firstLeft){
+                  str = '&#8601;'; // diagonal left down arrow
+                  firstLeft = true;
+                } else if (str === '1') {
+                  str = 'P';
+                }
+                current++;
+                logger.innerHTML += str;
+                if(current >= PASSCODE.length){
+                    counter++;
+                    current = 0;
+                    document.getElementById('msgbox').style.color = 'green';
+                    msgbox.innerHTML = 'Success ' + counter;
+                }
+            } else {
+                current = 0;
+                firstLeft = true;
+                logger.innerHTML = '';
+                msgbox.style.color = "red";
+                msgbox.innerHTML = "Try again";
+                if (counter > currentBest){
+                    currentBest = counter;
+                }
+                topscore.innerHTML = "Current Top Score: " + currentBest;
+                counter = 0;
+            }
+        }
+
+        document.addEventListener("keypress", keyListener);
+    </script>
+</head>
+<body>
+<div id="logger"></div>
+
+<div id="msgbox"></div>
+
+<div id="topscore"></div>
+</body>
+</html>
