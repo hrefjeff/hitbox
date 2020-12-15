@@ -49,6 +49,7 @@
         let logger = document.getElementById('logger');
         let msgbox = document.getElementById('msgbox');
         let topscore = document.getElementById('topscore');
+        let totalmsg = document.getElementById('totalmsg');
 
         // Input and character variables
         const INPUTBUFFER = ['a','s','a','k']; // DP motion
@@ -59,11 +60,13 @@
         let current = 0;
         let counter = 0;
         let currentBest = 0;
+        let total = 0;
 
         let str = '';
 
         // Timing variables
         let start = null;
+        let end = null;
         let firstLeft = true;
 
         function toggleLeftIsPressed(){
@@ -81,13 +84,17 @@
             }
             topscore.innerHTML = 'Current Top Score: ' + currentBest;
             counter = 0;
+            start = null;
+            end = null;
         }
 
         function successfulTry(){
             counter++;
+            totalTime = (end - start) / 1000;
             current = 0;
             document.getElementById('msgbox').style.color = 'green';
-            msgbox.innerHTML = 'Success ' + counter;
+            msgbox.innerHTML = 'Success ' + counter + ' Total Time: ' + totalTime;
+            totalmsg.innerHTML = 'Total DP\'s input so far: ' + total++;
         }
 
         function keyListener(e) {
@@ -96,6 +103,7 @@
             if(str === INPUTBUFFER[current]){
 
                 if (str === 'a' && firstLeft){
+                    start = new Date();
                     str = LEFTARROW; 
                     document.addEventListener('keyup',toggleLeftIsPressed);
                     firstLeft = false;
@@ -108,6 +116,7 @@
                     firstLeft = true;
                 } else if (str === 'k') {
                     str = 'P';
+                    end = new Date();
                 }
 
                 current++;
@@ -132,5 +141,7 @@
 <div id="msgbox"></div>
 
 <div id="topscore"></div>
+
+<div id="totalmsg"></div>
 </body>
 </html>
