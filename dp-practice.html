@@ -47,60 +47,87 @@
     </style>
 
     <script type="text/javascript">
-        var PASSCODE = ['a','s','a', '1'];
-var current = 0;
-var counter = 0;
-var currentBest = 0;
-let str = '';
-let code = null;
-var logger = document.getElementById('logger');
-var msgbox = document.getElementById('msgbox');
-var topscore = document.getElementById('topscore');
 
-let start = null;
-let firstLeft = true;
+        // DOM elements
+        let logger = document.getElementById('logger');
+        let msgbox = document.getElementById('msgbox');
+        let topscore = document.getElementById('topscore');
 
+        // Local variables
+        const INPUTBUFFER = ['a','s','a','k']; // DP motion
+        const LEFTARROW = '&#8592;';
+        const DOWNARROW = '&#8595;';
+        const DIAGARROW = '&#8601;';
+        
+        let current = 0;
+        let counter = 0;
+        let currentBest = 0;
+
+        let str = '';
+        let code = null;
+        
+
+        let start = null;
+        let firstLeft = true;
+
+        function toggleLeftIsPressed(){
+            leftIsPressed = false;
+        }
+
+        function tryAgain(){
+            current = 0;
+            firstLeft = true;
+            logger.innerHTML = '';
+            msgbox.style.color = 'red';
+            msgbox.innerHTML = 'Try again';
+            if (counter > currentBest){
+                currentBest = counter;
+            }
+            topscore.innerHTML = 'Current Top Score: ' + currentBest;
+            counter = 0;
+        }
+
+        function successfulTry(){
+            counter++;
+            current = 0;
+            document.getElementById('msgbox').style.color = 'green';
+            msgbox.innerHTML = 'Success ' + counter;
+        }
 
         function keyListener(e) {
-            code = e.keyCode || e.which;
-            str = String.fromCharCode(code);
-            code = null;
+            str = String.fromCharCode(e.keyCode);
         
-            if(str === PASSCODE[current]){
+            if(str === INPUTBUFFER[current]){
+
                 if (str === 'a' && firstLeft){
-                  str = '&#8592;'; // left arrow
-                  firstLeft = false;
-                } else if (str === 's') {
-                  str = '&#8595;'; // down arrow
+                    str = LEFTARROW; 
+                    document.addEventListener('keyup',toggleLeftIsPressed);
+                    firstLeft = false;
+                } else if (str === 's' && !leftIsPressed) {
+                    toggleLeftIsPressed();
+                    document.removeEventListener('keyup',toggleLeftIsPressed);
+                    str = DOWNARROW; 
                 } else if (str === 'a' && !firstLeft){
-                  str = '&#8601;'; // diagonal left down arrow
-                  firstLeft = true;
-                } else if (str === '1') {
-                  str = 'P';
+                    str = DIAGARROW; 
+                    firstLeft = true;
+                } else if (str === 'k') {
+                    str = 'P';
                 }
+
                 current++;
+                if (logger.innerHTML.length > 20){
+                    logger.innerHTML = logger.innerHTML.slice(1);
+                }
                 logger.innerHTML += str;
-                if(current >= PASSCODE.length){
-                    counter++;
-                    current = 0;
-                    document.getElementById('msgbox').style.color = 'green';
-                    msgbox.innerHTML = 'Success ' + counter;
+                if(current >= INPUTBUFFER.length){
+                    successfulTry();
                 }
             } else {
-                current = 0;
-                firstLeft = true;
-                logger.innerHTML = '';
-                msgbox.style.color = "red";
-                msgbox.innerHTML = "Try again";
-                if (counter > currentBest){
-                    currentBest = counter;
-                }
-                topscore.innerHTML = "Current Top Score: " + currentBest;
-                counter = 0;
+                tryAgain();
             }
         }
 
-        document.addEventListener("keypress", keyListener);
+        document.addEventListener('keypress', keyListener);
     </script>
 </head>
 <body>
