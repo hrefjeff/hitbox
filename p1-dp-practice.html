@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<!--
+
+    Incorporating reaction jump time
+    https://github.com/gattodigital/JS-Reaction-Time/blob/master/js_reaction_time.html
+
+    Arrows
+    https://www.toptal.com/designers/htmlarrows/
+
+-->
+
+<head>
+
+    <style type="text/css">
+
+        #logger {
+          border: 3px solid black;
+          height: 200px;
+        }
+
+        #msgbox {
+          height: 50px;
+        }
+
+        #topscore {
+          height: 50px;
+        }
+
+        #totalmsg {
+          height: 50px;
+        }
+
+        .middle {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: auto;
+          width: 50%;
+        }
+    </style>
+</head>
+<body>
+<div id="logger" class="middle"></div>
+
+<div id="msgbox" class="middle"></div>
+
+<div id="topscore" class="middle"></div>
+
+<div id="totalmsg" class="middle"></div>
+</body>
+
+<script type="text/javascript">
+
+    // DOM elements
+    let logger = document.getElementById('logger');
+    let msgbox = document.getElementById('msgbox');
+    let topscore = document.getElementById('topscore');
+    let totalmsg = document.getElementById('totalmsg');
+
+    // Input and character variables
+    const INPUTBUFFER = ['d','s','d','k']; // DP motion
+    const LEFTARROW = '&#8592;';
+    const RIGHTARROW = '&#8594;';
+    const DOWNARROW = '&#8595;';
+    const DIAGLEFTARROW = '&#8601;';
+    const DIAGRIGHTARROW = '&#8600;';
+
+    let current = 0;
+    let counter = 0;
+    let currentBest = 0;
+    let total = 0;
+
+    let str = '';
+    let leftIsPressed = false;
+
+    // Timing variables
+    let start = null;
+    let end = null;
+    let firstLeft = true;
+
+    function leftIsNotPressed(){
+      leftIsPressed = false;
+    }
+
+    function tryAgain(){
+      current = 0;
+      firstLeft = true;
+      leftIsPressed = false;
+      document.removeEventListener('keyup',leftIsNotPressed);
+      logger.innerHTML = '';
+      msgbox.style.color = 'red';
+      msgbox.innerHTML = 'Try again';
+      if (counter > currentBest){
+        currentBest = counter;
+      }
+      topscore.innerHTML = 'Current Top Score: ' + currentBest;
+      counter = 0;
+      start = null;
+      end = null;
+    }
+
+    function successfulTry(){
+      counter++;
+      totalTime = (end - start) / 1000;
+      current = 0;
+      document.getElementById('msgbox').style.color = 'green';
+      msgbox.innerHTML = 'Success ' + counter + ' Total Time: ' + totalTime;
+      totalmsg.innerHTML = 'Total DP input so far: ' + total++;
+    }
+
+    function keyListener(e) {
+      str = String.fromCharCode(e.keyCode);
+
+      if(str === INPUTBUFFER[current]){
+
+        if (str === INPUTBUFFER[0] && firstLeft){
+          start = new Date();
+          document.addEventListener('keyup',leftIsNotPressed);
+          str = RIGHTARROW;
+          leftIsPressed = true;
+          firstLeft = false;
+        } else if (str === INPUTBUFFER[1] && leftIsPressed) {
+          str = 'Down was pressed without releasing right';
+          tryAgain(); 
+        } else if (str === INPUTBUFFER[1] && !leftIsPressed) {
+          document.removeEventListener('keyup',leftIsNotPressed);
+          str = DOWNARROW; 
+        } else if (str === INPUTBUFFER[2] && !firstLeft){
+          str = DIAGRIGHTARROW; 
+          firstLeft = true;
+        } else if (str === INPUTBUFFER[3]) {
+          str = 'P';
+          end = new Date();
+        }
+
+        current++;
+        if (logger.innerHTML.length > 20){
+          logger.innerHTML = logger.innerHTML.slice(1);
+        }
+        logger.innerHTML += str;
+        if(current >= INPUTBUFFER.length){
+          successfulTry();
+        }
+      } else {
+        tryAgain();
+      }
+    }
+
+    document.addEventListener('keypress', keyListener);
+</script>
+
+</html>
