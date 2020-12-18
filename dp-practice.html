@@ -14,36 +14,34 @@
 <head>
 
     <style type="text/css">
+
         #logger {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: auto;
-            width: 50%;
-            border: 3px solid black;
-            height: 200px;
+          border: 3px solid black;
+          height: 200px;
         }
 
         #msgbox {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: auto;
-            width: 50%;
-            height: 50px;
+          height: 50px;
         }
 
         #topscore {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: auto;
-            width: 50%;
-            height: 50px;
+          height: 50px;
+        }
+
+        #totalmsg {
+          height: 50px;
+        }
+
+        .middle {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: auto;
+          width: 50%;
         }
     </style>
 
-    <script type="text/javascript">
+    <script type="text/javascript" defer>
 
         // DOM elements
         let logger = document.getElementById('logger');
@@ -136,12 +134,12 @@
     </script>
 </head>
 <body>
-<div id="logger"></div>
+<div id="logger" class="middle"></div>
 
-<div id="msgbox"></div>
+<div id="msgbox" class="middle"></div>
 
-<div id="topscore"></div>
+<div id="topscore" class="middle"></div>
 
-<div id="totalmsg"></div>
+<div id="totalmsg" class="middle"></div>
 </body>
 </html>
