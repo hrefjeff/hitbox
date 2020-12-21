@@ -41,104 +41,6 @@
         }
     </style>
 
-    <script type="text/javascript">
-
-        // DOM elements
-        let logger = document.getElementById('logger');
-        let msgbox = document.getElementById('msgbox');
-        let topscore = document.getElementById('topscore');
-        let totalmsg = document.getElementById('totalmsg');
-
-        // Input and character variables
-        const INPUTBUFFER = ['a','s','a','k']; // DP motion
-        const LEFTARROW = '&#8592;';
-        const DOWNARROW = '&#8595;';
-        const DIAGARROW = '&#8601;';
-
-        let current = 0;
-        let counter = 0;
-        let currentBest = 0;
-        let total = 0;
-
-        let str = '';
-        let leftIsPressed = false;
-
-        // Timing variables
-        let start = null;
-        let end = null;
-        let firstLeft = true;
-
-        function leftIsNotPressed(){
-          leftIsPressed = false;
-        }
-
-        function tryAgain(){
-          current = 0;
-          firstLeft = true;
-          leftIsPressed = false;
-          document.removeEventListener('keyup',leftIsNotPressed);
-          logger.innerHTML = '';
-          msgbox.style.color = 'red';
-          msgbox.innerHTML = 'Try again';
-          if (counter > currentBest){
-            currentBest = counter;
-          }
-          topscore.innerHTML = 'Current Top Score: ' + currentBest;
-          counter = 0;
-          start = null;
-          end = null;
-        }
-
-        function successfulTry(){
-          counter++;
-          totalTime = (end - start) / 1000;
-          current = 0;
-          document.getElementById('msgbox').style.color = 'green';
-          msgbox.innerHTML = 'Success ' + counter + ' Total Time: ' + totalTime;
-          totalmsg.innerHTML = 'Total DP input so far: ' + total++;
-        }
-
-        function keyListener(e) {
-          str = String.fromCharCode(e.keyCode);
-
-          if(str === INPUTBUFFER[current]){
-
-            if (str === 'a' && firstLeft){
-              start = new Date();
-              document.addEventListener('keyup',leftIsNotPressed);
-              str = LEFTARROW;
-              leftIsPressed = true;
-              firstLeft = false;
-            } else if (str === 's' && leftIsPressed) {
-              str = 'Down was pressed without releasing left';
-              tryAgain(); 
-            } else if (str === 's' && !leftIsPressed) {
-              document.removeEventListener('keyup',leftIsNotPressed);
-              str = DOWNARROW; 
-            } else if (str === 'a' && !firstLeft){
-              str = DIAGARROW; 
-              firstLeft = true;
-            } else if (str === 'k') {
-              str = 'P';
-              end = new Date();
-            }
-
-            current++;
-            if (logger.innerHTML.length > 20){
-              logger.innerHTML = logger.innerHTML.slice(1);
-            }
-            logger.innerHTML += str;
-            if(current >= INPUTBUFFER.length){
-              successfulTry();
-            }
-          } else {
-            tryAgain();
-          }
-        }
-
-        document.addEventListener('keypress', keyListener);
-
-    </script>
 </head>
 <body>
 <div id="logger" class="middle"></div>
@@ -149,4 +51,107 @@
 
 <div id="totalmsg" class="middle"></div>
 </body>
+
+<script type="text/javascript">
+
+    // DOM elements
+    let logger = document.getElementById('logger');
+    let msgbox = document.getElementById('msgbox');
+    let topscore = document.getElementById('topscore');
+    let totalmsg = document.getElementById('totalmsg');
+
+    // Input and character variables
+    const INPUTBUFFER = ['a','s','a','k']; // DP motion
+    const LEFTARROW = '&#8592;';
+    const DOWNARROW = '&#8595;';
+    const DIAGARROW = '&#8601;';
+
+    let current = 0;
+    let counter = 0;
+    let currentBest = 0;
+    let total = 0;
+    let avgTime = 0;
+
+    let str = '';
+    let leftIsPressed = false;
+
+    // Timing variables
+    let start = null;
+    let end = null;
+    let firstLeft = true;
+
+    function leftIsNotPressed(){
+      leftIsPressed = false;
+    }
+
+    function tryAgain(){
+      current = 0;
+      avgTime = 0;
+      firstLeft = true;
+      leftIsPressed = false;
+      document.removeEventListener('keyup',leftIsNotPressed);
+      logger.innerHTML = '';
+      msgbox.style.color = 'red';
+      msgbox.innerHTML = 'Try again';
+      if (counter > currentBest){
+        currentBest = counter;
+      }
+      topscore.innerHTML = 'Current Top Score: ' + currentBest;
+      counter = 0;
+      start = null;
+      end = null;
+    }
+
+    function successfulTry(){
+      counter++;
+      totalTime = (end - start) / 1000;
+      avgTime += totalTime;
+      current = 0;
+      document.getElementById('msgbox').style.color = 'green';
+      msgbox.innerHTML = 'Success ' + counter + ' Total Time: ' + totalTime + ' (Avg: ' + (avgTime/counter).toFixed(3) + ')';
+      totalmsg.innerHTML = 'Total DP input so far: ' + total++;
+    }
+
+    function keyListener(e) {
+      str = String.fromCharCode(e.keyCode);
+
+      if(str === INPUTBUFFER[current]){
+
+        if (str === 'a' && firstLeft){
+          start = new Date();
+          document.addEventListener('keyup',leftIsNotPressed);
+          str = LEFTARROW;
+          leftIsPressed = true;
+          firstLeft = false;
+        } else if (str === 's' && leftIsPressed) {
+          str = 'Down was pressed without releasing left';
+          tryAgain(); 
+        } else if (str === 's' && !leftIsPressed) {
+          document.removeEventListener('keyup',leftIsNotPressed);
+          str = DOWNARROW; 
+        } else if (str === 'a' && !firstLeft){
+          str = DIAGARROW; 
+          firstLeft = true;
+        } else if (str === 'k') {
+          str = 'P';
+          end = new Date();
+        }
+
+        current++;
+        if (logger.innerHTML.length > 20){
+          logger.innerHTML = logger.innerHTML.slice(1);
+        }
+        logger.innerHTML += str;
+        if(current >= INPUTBUFFER.length){
+          successfulTry();
+        }
+      } else {
+        tryAgain();
+      }
+    }
+
+    document.addEventListener('keypress', keyListener);
+
+</script>
+
 </html>
