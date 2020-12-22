@@ -54,7 +54,7 @@
 
 <div id="totalmsg" class="middle"></div>
 
-<div id="funfact" class="middle">A jump in SFV is on average 46 frames</div>
+<div id="funfact" class="middle"></div>
 </body>
 
 <script type="text/javascript">
@@ -70,7 +70,7 @@
     const LEFTARROW = '&#8592;';
     const DOWNARROW = '&#8595;';
     const DIAGARROW = '&#8601;';
-    const MS_PER_FPS = 16.66666666666;
+    const MS_PER_FPS = 16.66666666666; // There are ~16.67 MS per frame in 60FPS
 
     let current = 0;
     let counter = 0;
@@ -87,26 +87,28 @@
     let end = null;
     let firstLeft = true;
 
+    // Event listener functions
     function leftIsNotPressed(){
       leftIsPressed = false;
     }
 
+    // General Functions
     function tryAgain(){
-      current = 0;
-      avgFps = 0;
-      firstLeft = true;
-      leftIsPressed = false;
       document.removeEventListener('keyup',leftIsNotPressed);
       logger.innerHTML = '';
       msgbox.style.color = 'red';
       msgbox.innerHTML = 'Try again';
+      current = 0;
+      avgFps = 0;
+      firstLeft = true;
+      leftIsPressed = false;
+      counter = 0;
+      start = null;
+      end = null;
       if (counter > currentBest){
         currentBest = counter;
       }
       topscore.innerHTML = 'Current Top Score: ' + currentBest;
-      counter = 0;
-      start = null;
-      end = null;
     }
 
     function successfulTry(){
@@ -143,11 +145,12 @@
           str = DIAGARROW; 
           firstLeft = true;
         } else if (str === 'k') {
-          str = 'P';
           end = new Date();
+          str = 'P';
         }
 
         current++;
+
         if (logger.innerHTML.length > 20){
           logger.innerHTML = logger.innerHTML.slice(1);
         }
@@ -161,6 +164,11 @@
     }
 
     document.addEventListener('keypress', keyListener);
+
+    // TODO: Implement cycle of these fun facts
+    let funfacts = [
+      'A jump in SFV is on average 46 frames',
+    ];
 
 </script>
 
