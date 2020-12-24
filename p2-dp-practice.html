@@ -102,13 +102,13 @@
       avgFps = 0;
       firstLeft = true;
       leftIsPressed = false;
-      counter = 0;
-      start = null;
-      end = null;
       if (counter > currentBest){
         currentBest = counter;
       }
       topscore.innerHTML = 'Current Top Score: ' + currentBest;
+      counter = 0;
+      start = null;
+      end = null;
     }
 
     function successfulTry(){

@@ -9,6 +9,8 @@
     Arrows
     https://www.toptal.com/designers/htmlarrows/
 
+    1ms in 60 fps formula: (1/60) * 1000 = 16.7ms
+
 -->
 
 <head>
@@ -21,7 +23,7 @@
         }
 
         #msgbox {
-          height: 50px;
+          height: 70px;
         }
 
         #topscore {
@@ -36,10 +38,12 @@
           display: flex;
           justify-content: center;
           align-items: center;
+          text-align: center;
           margin: auto;
           width: 50%;
         }
     </style>
+
 </head>
 <body>
 <div id="logger" class="middle"></div>
@@ -49,6 +53,8 @@
 <div id="topscore" class="middle"></div>
 
 <div id="totalmsg" class="middle"></div>
+
+<div id="funfact" class="middle"></div>
 </body>
 
 <script type="text/javascript">
@@ -64,34 +70,40 @@
     const LEFTARROW = '&#8592;';
     const RIGHTARROW = '&#8594;';
     const DOWNARROW = '&#8595;';
-    const DIAGLEFTARROW = '&#8601;';
-    const DIAGRIGHTARROW = '&#8600;';
+    const DIAGARROW = '&#8601;';
+    const DIAGDOWNRIGHT = '&#8600;';
+    const MS_PER_FPS = 16.66666666666; // There are ~16.67 MS per frame in 60FPS
 
     let current = 0;
     let counter = 0;
     let currentBest = 0;
     let total = 0;
+    let fpsTime = 0;
+    let avgFps = 0;
 
     let str = '';
-    let leftIsPressed = false;
+    let horizontalIsPressed = false;
 
     // Timing variables
     let start = null;
     let end = null;
-    let firstLeft = true;
+    let firstHorizontal = true;
 
-    function leftIsNotPressed(){
-      leftIsPressed = false;
+    // Event listener functions
+    function horizontalIsNotPressed(){
+      horizontalIsPressed = false;
     }
 
+    // General Functions
     function tryAgain(){
-      current = 0;
-      firstLeft = true;
-      leftIsPressed = false;
-      document.removeEventListener('keyup',leftIsNotPressed);
+      document.removeEventListener('keyup',horizontalIsNotPressed);
       logger.innerHTML = '';
       msgbox.style.color = 'red';
       msgbox.innerHTML = 'Try again';
+      current = 0;
+      avgFps = 0;
+      firstHorizontal = true;
+      horizontalIsPressed = false;
       if (counter > currentBest){
         currentBest = counter;
       }
@@ -103,10 +115,14 @@
 
     function successfulTry(){
       counter++;
-      totalTime = (end - start) / 1000;
+      fpsTime = (end - start)/MS_PER_FPS; // ms
+      avgFps += fpsTime;
       current = 0;
       document.getElementById('msgbox').style.color = 'green';
-      msgbox.innerHTML = 'Success ' + counter + ' Total Time: ' + totalTime;
+      msgbox.innerHTML = 'Success  #' + counter + 
+        ' <br/>Total Frames: ' + fpsTime.toFixed(2) + 
+        ' <br/>(Avg Frames: '  + (avgFps/counter).toFixed(2) + 
+      ')';
       totalmsg.innerHTML = 'Total DP input so far: ' + total++;
     }
 
@@ -115,27 +131,28 @@
 
       if(str === INPUTBUFFER[current]){
 
-        if (str === INPUTBUFFER[0] && firstLeft){
+        if (str === INPUTBUFFER[0] && firstHorizontal){
           start = new Date();
-          document.addEventListener('keyup',leftIsNotPressed);
+          document.addEventListener('keyup',horizontalIsNotPressed);
           str = RIGHTARROW;
-          leftIsPressed = true;
-          firstLeft = false;
-        } else if (str === INPUTBUFFER[1] && leftIsPressed) {
+          horizontalIsPressed = true;
+          firstHorizontal = false;
+        } else if (str === INPUTBUFFER[1] && horizontalIsPressed) {
           str = 'Down was pressed without releasing right';
           tryAgain(); 
-        } else if (str === INPUTBUFFER[1] && !leftIsPressed) {
-          document.removeEventListener('keyup',leftIsNotPressed);
+        } else if (str === INPUTBUFFER[1] && !horizontalIsPressed) {
+          document.removeEventListener('keyup',horizontalIsNotPressed);
           str = DOWNARROW; 
-        } else if (str === INPUTBUFFER[2] && !firstLeft){
-          str = DIAGRIGHTARROW; 
-          firstLeft = true;
+        } else if (str === INPUTBUFFER[0] && !firstHorizontal){
+          str = DIAGDOWNRIGHT; 
+          firstHorizontal = true;
         } else if (str === INPUTBUFFER[3]) {
-          str = 'P';
           end = new Date();
+          str = 'P';
         }
 
         current++;
+
         if (logger.innerHTML.length > 20){
           logger.innerHTML = logger.innerHTML.slice(1);
         }
@@ -149,6 +166,12 @@
     }
 
     document.addEventListener('keypress', keyListener);
+
+    // TODO: Implement cycle of these fun facts
+    let funfacts = [
+      'A jump in SFV is on average 46 frames',
+    ];
+
 </script>
 
 </html>
