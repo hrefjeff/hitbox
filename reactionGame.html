@@ -22,8 +22,10 @@
         <div id="shape"></div>
 
         <script type="text/javascript">
+
+            const MS_PER_FPS = 16.66666666666; // There are ~16.67 MS per frame in 60FPS
             
-            var start = new Date().getTime();
+            var start = new Date();
             
             function getRandomColor() {
                 var letters = '0123456789ABCDEF'.split('');
@@ -38,20 +40,20 @@
             function makeShapeAppear() {
                 document.getElementById("shape").style.backgroundColor = getRandomColor();
                 document.getElementById("shape").style.display = "block";
-                start = new Date().getTime();
+                start = new Date();
             }
             
             function appearAfterDelay() {
-                setTimeout(makeShapeAppear, Math.random() * 10000);
+                setTimeout(makeShapeAppear, Math.random() * 5000);
             }
             
             appearAfterDelay();
             
             document.getElementById("shape").onclick = function() {
                 document.getElementById("shape").style.display = "none";
-                var end = new Date().getTime();
-                var timeTaken = (end - start) / 1000;
-                document.getElementById("timeTaken").innerHTML = timeTaken + "s";
+                var end = new Date();
+                let fpsTime = (end - start)/MS_PER_FPS; // ms
+                document.getElementById("timeTaken").innerHTML = fpsTime.toFixed(2) + " frames";
                 appearAfterDelay();
             }
             
