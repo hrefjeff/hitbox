@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<!--
+
+    Incorporating reaction jump time
+    https://github.com/gattodigital/JS-Reaction-Time/blob/master/js_reaction_time.html
+
+    Arrows
+    https://www.toptal.com/designers/htmlarrows/
+
+    1ms in 60 fps formula: (1/60) * 1000 = 16.7ms
+
+-->
+
+<head>
+
+    <style type="text/css">
+
+        #logger {
+          border: 3px solid black;
+          height: 200px;
+        }
+
+        #msgbox {
+          height: 70px;
+        }
+
+        #topscore {
+          height: 50px;
+        }
+
+        #totalmsg {
+          height: 50px;
+        }
+
+        #jumparea {
+            width: 200px;
+            height: 200px;
+            background-color: rgb(255, 0, 0);
+            display: none;
+        }
+
+        .middle {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          margin: auto;
+          width: 50%;
+        }
+    </style>
+
+</head>
+<body>
+<div id="logger" class="middle"></div>
+
+<div id="msgbox" class="middle"></div>
+
+<div id="topscore" class="middle"></div>
+
+<div id="totalmsg" class="middle"></div>
+
+<div id="reactiontime" class="middle">
+    <p class="bold">Your time: <span id="timeTaken"></span></p>
+</div>
+
+<div id="shape" class="middle"></div>
+
+<div id="jumparea" class="middle"></div>
+
+<div id="funfact" class="middle"></div>
+</body>
+
+<script type="text/javascript">
+
+    // DOM elements
+    let logger = document.getElementById('logger');
+    let msgbox = document.getElementById('msgbox');
+    let topscore = document.getElementById('topscore');
+    let totalmsg = document.getElementById('totalmsg');
+
+    // Input and character variables
+    const INPUTBUFFER = ['a','s','a','k']; // DP motion
+    const LEFTARROW = '&#8592;';
+    const DOWNARROW = '&#8595;';
+    const DIAGARROW = '&#8601;';
+    const MS_PER_FPS = 16.66666666666; // There are ~16.67 MS per frame in 60FPS
+
+    let current = 0;
+    let counter = 0;
+    let currentBest = 0;
+    let total = 0;
+    let fpsTime = 0;
+    let avgFps = 0;
+
+    let str = '';
+    let leftIsPressed = false;
+
+    // Timing variables
+    let start = null;
+    let end = null;
+    let firstLeft = true;
+
+    // Reaction game variables
+    let reaction_start = new Date();
+    let reaction_end = new Date();
+    let reaction_time = null;
+
+    // Event listener functions
+    function leftIsNotPressed(){
+      leftIsPressed = false;
+    }
+
+    // General Functions
+    function tryAgain(){
+      document.removeEventListener('keyup',leftIsNotPressed);
+      logger.innerHTML = '';
+      msgbox.style.color = 'red';
+      msgbox.innerHTML = 'Try again';
+      current = 0;
+      avgFps = 0;
+      firstLeft = true;
+      leftIsPressed = false;
+      if (counter > currentBest){
+        currentBest = counter;
+      }
+      topscore.innerHTML = 'Current Top Score: ' + currentBest;
+      counter = 0;
+      start = null;
+      end = null;
+    }
+
+    function successfulTry(){
+      counter++;
+      fpsTime = (end - start)/MS_PER_FPS; // ms
+      avgFps += fpsTime;
+      current = 0;
+      document.getElementById('msgbox').style.color = 'green';
+      msgbox.innerHTML = 'Success  #' + counter + 
+        ' <br/>Total Frames: ' + fpsTime.toFixed(2) + 
+        ' <br/>(Avg Frames: '  + (avgFps/counter).toFixed(2) + 
+      ')';
+      totalmsg.innerHTML = 'Total DP input so far: ' + total++;
+    }
+
+    function keyListener(e) {
+      str = String.fromCharCode(e.keyCode);
+
+      if(str === INPUTBUFFER[current]){
+
+        if (str === 'a' && firstLeft){
+          start = new Date();
+          document.addEventListener('keyup',leftIsNotPressed);
+          str = LEFTARROW;
+          leftIsPressed = true;
+          firstLeft = false;
+        } else if (str === 's' && leftIsPressed) {
+          str = 'Down was pressed without releasing left';
+          tryAgain(); 
+        } else if (str === 's' && !leftIsPressed) {
+          document.removeEventListener('keyup',leftIsNotPressed);
+          str = DOWNARROW; 
+        } else if (str === 'a' && !firstLeft){
+          str = DIAGARROW; 
+          firstLeft = true;
+        } else if (str === 'k') {
+          end = new Date();
+          str = 'P';
+        }
+
+        current++;
+
+        if (logger.innerHTML.length > 20){
+          logger.innerHTML = logger.innerHTML.slice(1);
+        }
+        logger.innerHTML += str;
+        if(current >= INPUTBUFFER.length){
+            successfulTry();
+            restartSuccessGame();
+        }
+      } else {
+        tryAgain();
+        restartFailedGame();
+      }
+    }
+
+    // Reaction game functions
+    function makeShapeAppear() {
+        document.addEventListener('keypress', keyListener);
+        document.getElementById("jumparea").style.backgroundColor = '#ff0000';
+        document.getElementById("jumparea").style.display = "block";
+        reaction_start = new Date();
+    }
+
+    function appearAfterDelay() {
+        setTimeout(makeShapeAppear, Math.random() * 5000);
+    }
+
+    appearAfterDelay();
+
+    function restartSuccessGame(){
+        document.getElementById("jumparea").style.display = "none";
+        reaction_end = new Date();
+        reaction_time = (reaction_end - reaction_start)/MS_PER_FPS; // ms
+        if(reaction_time > 37){
+            document.getElementById("timeTaken").innerHTML = "Took to long to AA";
+        } else {
+            document.getElementById("timeTaken").innerHTML = reaction_time.toFixed(2) + " frames";
+        }
+        appearAfterDelay();
+    }
+
+    function restartFailedGame(){
+        document.getElementById("jumparea").style.display = "none";
+        document.getElementById("timeTaken").innerHTML = "Unsuccessful AA";
+        appearAfterDelay();
+    }
+
+    // TODO: Implement cycle of these fun facts
+    let funfacts = [
+      'A jump in SFV is on average 46 frames',
+    ];
+
+</script>
+
+</html>
