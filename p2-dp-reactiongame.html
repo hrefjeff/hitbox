@@ -26,19 +26,14 @@
           height: 70px;
         }
 
-        #topscore {
-          height: 50px;
-        }
-
-        #totalmsg {
+        #stats {
           height: 50px;
         }
 
         #jumparea {
             width: 200px;
             height: 200px;
-            background-color: rgb(255, 0, 0);
-            display: none;
+            background-color: white;
         }
 
         .middle {
@@ -57,15 +52,17 @@
 
 <div id="msgbox" class="middle"></div>
 
-<div id="topscore" class="middle"></div>
-
-<div id="totalmsg" class="middle"></div>
-
-<div id="reactiontime" class="middle">
-    <p class="bold">Your time: <span id="timeTaken"></span></p>
+<div id="stats" class="middle">
+    <p>
+        Current top score: <span id="topscoremsg">0</span>
+        <br>
+        Total Shoryukens so far: <span id="totalmsg">0</span>
+    </p>
 </div>
 
-<div id="shape" class="middle"></div>
+<div id="reactiontime" class="middle">
+    <p class="bold">Your reaction time: <span id="timeTaken"></span></p>
+</div>
 
 <div id="jumparea" class="middle"></div>
 
@@ -77,7 +74,7 @@
     // DOM elements
     let logger = document.getElementById('logger');
     let msgbox = document.getElementById('msgbox');
-    let topscore = document.getElementById('topscore');
+    let topscore = document.getElementById('topscoremsg');
     let totalmsg = document.getElementById('totalmsg');
 
     // Input and character variables
@@ -85,6 +82,7 @@
     const LEFTARROW = '&#8592;';
     const DOWNARROW = '&#8595;';
     const DIAGARROW = '&#8601;';
+    const colors = ['#ff6600','#ff0066','#cc3399', '#cc33ff'];
     const MS_PER_FPS = 16.66666666666; // There are ~16.67 MS per frame in 60FPS
 
     let current = 0;
@@ -106,10 +104,18 @@
     let reaction_start = new Date();
     let reaction_end = new Date();
     let reaction_time = null;
+    let reaction_color = 0;
 
     // Event listener functions
     function leftIsNotPressed(){
       leftIsPressed = false;
+    }
+
+    function updateTopScore(){
+        if (counter > currentBest){
+        currentBest = counter;
+      }
+      topscore.innerHTML = currentBest;
     }
 
     // General Functions
@@ -122,10 +128,7 @@
       avgFps = 0;
       firstLeft = true;
       leftIsPressed = false;
-      if (counter > currentBest){
-        currentBest = counter;
-      }
-      topscore.innerHTML = 'Current Top Score: ' + currentBest;
+      updateTopScore();
       counter = 0;
       start = null;
       end = null;
@@ -133,6 +136,7 @@
 
     function successfulTry(){
       counter++;
+      updateTopScore();
       fpsTime = (end - start)/MS_PER_FPS; // ms
       avgFps += fpsTime;
       current = 0;
@@ -141,7 +145,7 @@
         ' <br/>Total Frames: ' + fpsTime.toFixed(2) + 
         ' <br/>(Avg Frames: '  + (avgFps/counter).toFixed(2) + 
       ')';
-      totalmsg.innerHTML = 'Total DP input so far: ' + total++;
+      totalmsg.innerHTML = total++;
     }
 
     function keyListener(e) {
@@ -188,8 +192,7 @@
     // Reaction game functions
     function makeShapeAppear() {
         document.addEventListener('keypress', keyListener);
-        document.getElementById("jumparea").style.backgroundColor = '#ff0000';
-        document.getElementById("jumparea").style.display = "block";
+        document.getElementById('jumparea').style.backgroundColor = 'red';
         reaction_start = new Date();
     }
 
@@ -197,23 +200,22 @@
         setTimeout(makeShapeAppear, Math.random() * 5000);
     }
 
-    appearAfterDelay();
-
     function restartSuccessGame(){
-        document.getElementById("jumparea").style.display = "none";
+        document.getElementById('jumparea').style.backgroundColor = 'white';
         reaction_end = new Date();
         reaction_time = (reaction_end - reaction_start)/MS_PER_FPS; // ms
+        let msg = '';
         if(reaction_time > 37){
-            document.getElementById("timeTaken").innerHTML = "Took to long to AA";
-        } else {
-            document.getElementById("timeTaken").innerHTML = reaction_time.toFixed(2) + " frames";
+            msg += 'Took to long to AA --- ';
         }
+        document.getElementById('timeTaken').innerHTML = msg + reaction_time.toFixed(2) + ' frames';
         appearAfterDelay();
     }
 
     function restartFailedGame(){
-        document.getElementById("jumparea").style.display = "none";
-        document.getElementById("timeTaken").innerHTML = "Unsuccessful AA";
+        document.getElementById('jumparea').style.backgroundColor = 'white';
+        document.getElementById('timeTaken').innerHTML = "Unsuccessful AA";
+        reaction_end = new Date();
         appearAfterDelay();
     }
 
@@ -221,6 +223,8 @@
     let funfacts = [
       'A jump in SFV is on average 46 frames',
     ];
+
+    appearAfterDelay();
 
 </script>
 
