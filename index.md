@@ -1,7 +1,7 @@
 # Hitbox Journal
 
 
-## Thoughts after a year and a couple month
+## Thoughts after a year and a couple months
 
 I've stuck with it! Things that helped me along the way I wish that I started earlier
 
