@@ -1,5 +1,14 @@
 # Hitbox Journal
 
+
+## Thoughts after a year and a couple month
+
+I've stuck with it! Things that helped me along the way I wish that I started earlier
+
+1. Getting a [hand exerciser](https://www.amazon.com/DAddario-Exerciser-Improve-Dexterity-Comfortable-Conditioning/dp/B001OCGGEM/ref=sr_1_14?dchild=1&keywords=hand+exerciser&qid=1618949648&sr=8-14)
+2. Practicing DP motions even outside of the game by using a keyboard. I created a website to help with this https://shoryumachine.com
+3. CONSISTENT practice
+
 ## Day 6 (Aug 11th, 2019)
 
 I created a battle lounge and lilCreepySleepy a Birdie player joined.
