@@ -1,5 +1,40 @@
 # Hitbox Journal
 
+## DoctaAfrikan's DP training
+
+Pick the training stage and Necalli.
+
+Recording 1: Necalli presses Vtrigger then walks back and forth
+(never more than 1 square in any direction) hitting stLP and stLK randomly.
+At 10 seconds, you execute a jumping HP at the opponent with the intent of hitting as early as possible on their head.
+
+Recording 2-5: Same recording with stLK/stLP randomly and then jump at 2.5, 5.0, 7.5, and 15.0 seconds, respectively.
+
+While this is happening, look at Necalli's feet and his feet alone.
+Randomly piano your fingers across random buttons with no rhyme or rhythm
+(this includes performing sweeps and special moves)
+The only law is that when Necalli's feet leave the floor, regardless of what your hands were doing when it happened,
+you execute the proper DP anti-air.
+
+If you're too late and it was a punish on whatever you were doing, this is fine.
+As long as you tried to input the motion CORRECTLY, this is a success.
+If the game allows you to block a jump, the game allows you to DP, as DP's are frame 1 anti-air invulnerable.
+If you get counter hit, it means you performed a move besides DP and need to clean up execution.
+
+Always hold down forward on your DPs, they should look like this:
+
+down-forward (punch)
+down-forward
+down
+forward
+
+or 
+
+down-forward (punch) 
+down
+forward
+
+Do this for 2 hours a day for a month, it doesn't have to be concurrent, just requires a minimum of 64 hours of effort put into the drill.
 
 ## Thoughts after a year and a couple months
 
