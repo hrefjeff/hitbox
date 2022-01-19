@@ -4,7 +4,7 @@
 
 Pick the training stage and Necalli.
 
-Recording 1: Necalli presses Vtrigger then walks back and forth
+Recording 1: Necalli presses Vtrigger, press start and save state, then walks back and forth
 (never more than 1 square in any direction) hitting stLP and stLK randomly.
 At 10 seconds, you execute a jumping HP at the opponent with the intent of hitting as early as possible on their head.
 
